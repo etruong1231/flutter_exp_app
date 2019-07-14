@@ -5,52 +5,41 @@ import '../models/transaction.dart';
 
 class TransactionItem extends StatelessWidget {
   final Transaction transactionItem;
-  TransactionItem(this.transactionItem);
+  Function removeAlertHandler;
+  TransactionItem(this.transactionItem, this.removeAlertHandler);
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Row(
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.symmetric(
-              vertical: 10,
-              horizontal: 15,
-            ),
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.purple,
-                width: 2,
-              ),
-            ),
+      elevation: 5,
+      margin: EdgeInsets.symmetric(
+        vertical: 8,
+        horizontal: 5,
+      ),
+      child: ListTile(
+        leading: CircleAvatar(
+          radius: 30,
+          child: Padding(
             padding: EdgeInsets.all(10),
-            child: Text(
-              '\$ ${transactionItem.amount}',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-                color: Colors.purple,
+            child: FittedBox(
+              child: Text(
+                '\$${transactionItem.amount.toStringAsFixed(2)}',
               ),
             ),
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text('${transactionItem.title}',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: Colors.black,
-                  )),
-              Text('${DateFormat().format(transactionItem.date)}',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey,
-                  )),
-            ],
+        ),
+        title: Text('${transactionItem.title}',
+            style: Theme.of(context).textTheme.title),
+        subtitle: Text('${DateFormat.yMMMd().format(transactionItem.date)}'),
+        trailing: FlatButton(
+          child: Icon(
+            Icons.remove_circle,
+            color: Colors.red,
           ),
-        ],
+          onPressed: () {
+            removeAlertHandler(context, transactionItem.id);
+          },
+        ),
       ),
     );
   }
