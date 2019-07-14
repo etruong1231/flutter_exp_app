@@ -10,7 +10,6 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300,
       child: transactionList.isEmpty
           ? Column(children: <Widget>[
               Text(
@@ -28,7 +27,8 @@ class TransactionList extends StatelessWidget {
             ])
           : ListView.builder(
               itemBuilder: (ctx, index) {
-                return TransactionItem(transactionList[index],removeAlertHandler);
+                return TransactionItem(
+                    transactionList[index], removeAlertHandler);
               },
               itemCount: transactionList.length,
             ),
